@@ -1,0 +1,14 @@
+import netmiko
+from netmiko import ConnectHandler
+
+
+def make_connection (ip,username,password):
+    try:
+        return netmiko.ConnectHandler(device_type='cisco_ios', ip=ip, username=username, password=password)
+    except:
+        try:
+            return netmiko.ConnectHandler(device_type='cisco_ios_telnet', ip=ip, username=username, password=password,port=23)
+        except:
+            issue = ip+ ", can't be ssh/telneted to"
+            to_doc_a("Issues.csv", issue)
+            return None     
